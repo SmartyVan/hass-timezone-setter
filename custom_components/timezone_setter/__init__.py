@@ -22,13 +22,30 @@ from .const import (
 # Instantiate once
 tf = TimezoneFinderL()
 
+def validate_timezone_or_coordinates(data):
+    has_timezone = "timezone" in data
+    has_lat = "latitude" in data
+    has_lon = "longitude" in data
+
+    if has_timezone and (has_lat or has_lon):
+        raise vol.Invalid("Provide either 'timezone' or a 'latitude' AND 'longitude', not all three.")
+
+    if (has_lat and not has_lon) or (has_lon and not has_lat):
+        raise vol.Invalid("Both 'latitude' and 'longitude' must be provided together.")
+
+    if not has_timezone and not (has_lat and has_lon):
+        raise vol.Invalid("You must provide either 'timezone' or a 'latitude' and 'longitude'.")
+
+    return data
+
 # Schema that allows either timezone OR lat/lon
-SERVICE_SCHEMA = vol.Schema(
-    {
-        vol.Optional(ATTR_TIMEZONE): cv.time_zone,
-        vol.Optional(ATTR_LATITUDE): vol.Coerce(float),
-        vol.Optional(ATTR_LONGITUDE): vol.Coerce(float),
-    }
+SERVICE_SCHEMA = vol.All(
+    vol.Schema({
+        vol.Optional("timezone"): cv.string,
+        vol.Optional("latitude"): vol.All(vol.Coerce(float), vol.Range(min=-90, max=90)),
+        vol.Optional("longitude"): vol.All(vol.Coerce(float), vol.Range(min=-180, max=180)),
+    }),
+    validate_timezone_or_coordinates
 )
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
