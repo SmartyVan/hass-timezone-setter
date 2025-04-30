@@ -10,7 +10,21 @@ This integration is useful for mobile installations (like RVs or boats), or auto
 
 ## 🔧 Installation
 
-Until this is available via HACS, install manually:
+### HACS Installation (Custom Repository)
+
+If this integration is not yet available in the HACS default store, you can still install it via HACS as a custom repository:
+
+1. In Home Assistant, go to **HACS → Integrations**
+2. Click the **⋮ (three-dot menu)** in the top right
+3. Choose **"Custom repositories"**
+4. In the dialog:
+   - **Repository**: `https://github.com/SmartyVan/hass-timezone-setter`
+   - **Category**: `Integration`
+5. Click **Add**
+
+The integration will then appear in your HACS Integrations list and can be installed and updated like any other.
+
+### Or, Manual Installation
 
 1. Copy this repository to your Home Assistant config folder:
    ```
