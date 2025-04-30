@@ -1,0 +1,5 @@
+DOMAIN = "timezone_setter"
+SERVICE_SET_TIMEZONE = "set_timezone"
+ATTR_LATITUDE = "latitude"
+ATTR_LONGITUDE = "longitude"
+ATTR_TIMEZONE = "timezone"

@@ -1,0 +1,8 @@
+{
+  "domain": "timezone_setter",
+  "name": "Timezone Setter",
+  "version": "0.1.0",
+  "codeowners": [
+    "@SmartyVan"
+  ]
+}

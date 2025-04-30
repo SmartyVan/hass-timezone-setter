@@ -1,0 +1,12 @@
+set_timezone:
+  name: Set Timezone
+  description: Sets the Home Assistant timezone.
+  fields:
+    timezone:
+      name: Timezone
+      description: Timezone to set (e.g., America/Chicago).
+      required: true
+      example: "America/New_York"
+      selector:
+        text:
+          type: text
