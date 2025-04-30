@@ -1,12 +1,30 @@
 set_timezone:
   name: Set Timezone
-  description: Sets the Home Assistant timezone.
+  description: Set the Home Assistant system timezone using either an IANA timezone string or geographic coordinates.
   fields:
     timezone:
       name: Timezone
-      description: Timezone to set (e.g., America/Chicago).
-      required: true
+      description: IANA timezone string (e.g., America/New_York). If not provided, latitude and longitude must be given instead.
+      required: false
       example: "America/New_York"
+      selector:
+        text:
+          type: text
+
+    latitude:
+      name: Latitude
+      description: Latitude coordinate. Required if no timezone is provided.
+      required: false
+      example: "40.7128"
+      selector:
+        text:
+          type: text
+
+    longitude:
+      name: Longitude
+      description: Longitude coordinate. Required if no timezone is provided.
+      required: false
+      example: "-74.0060"
       selector:
         text:
           type: text

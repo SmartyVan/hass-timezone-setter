@@ -2,7 +2,8 @@
   "domain": "timezone_setter",
   "name": "Timezone Setter",
   "version": "0.1.0",
-  "codeowners": [
-    "@SmartyVan"
-  ]
+  "documentation": "https://github.com/SmartyVan/hass-timezone-setter",
+  "dependencies": [],
+  "codeowners": ["@SmartyVan"],
+  "requirements": ["timezonefinder[lite]==6.5.9"]
 }
