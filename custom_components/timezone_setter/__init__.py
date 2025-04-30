@@ -1,6 +1,7 @@
 """Set up the Timezone Setter integration."""
 
 from homeassistant.core import ServiceCall, HomeAssistant
+from homeassistant.config import ConfigType
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.service import async_register_admin_service
 
@@ -48,7 +49,7 @@ SERVICE_SCHEMA = vol.All(
     validate_timezone_or_coordinates
 )
 
-async def async_setup(hass: HomeAssistant, config: dict) -> bool:
+async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Set up the Timezone Setter integration."""
 
     async def async_set_timezone(call: ServiceCall) -> None:
@@ -66,11 +67,20 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
 
             tz = tf.timezone_at(lat=lat, lng=lon)
 
-            # 🔍 Log the raw value returned from timezonefinder
-            _LOGGER.info(f"[Timezone Setter] Resolved timezone from lat/lon: {tz}")
+            # Log the raw value returned from timezonefinder
+            _LOGGER.info("Resolved timezone from lat/lon: %s", tz)
+
 
             if not tz:
                 raise ValueError("Could not determine timezone from latitude/longitude.")
+
+        current_tz = hass.config.time_zone
+
+        if tz == current_tz:
+            _LOGGER.debug("Timezone unchanged (%s); skipping update.", tz)
+            return
+
+        _LOGGER.info("Changing system timezone: %s → %s", current_tz, tz)
 
         await hass.config.async_update(time_zone=tz)
 
